@@ -37,11 +37,9 @@ public class Main
 		
 		int rows = fileReader.nextInt();
 		int cols = fileReader.nextInt();
-		
-		
-	
-		int[][] matrix1 = new int[1][1];
-		int[][] matrix2 = new int[1][1];
+
+		int[][] matrix1 = matrixFromFile(rows,cols,fileReader);
+		int[][] matrix2 = matrixFromFile(rows,cols,fileReader);
 		
 		ThreadOperation thread0 = new ThreadOperation(matrix1, matrix2, Quadrant.AA);
 		ThreadOperation thread1 = new ThreadOperation(matrix1, matrix2, Quadrant.AB);
@@ -70,23 +68,9 @@ public class Main
 			{7, 8, 9}
 		};
 		
-		print2dArray(test);
-		
-		
-		/*
-		For part 1 you need to create both of the above classes.
-
-		6.	Read in the number of rows and columns and save these in local variables in main.
-
-		7.	Read in the first and second matrices (two-dimensional arrays) from the file. I recommend writing a method to accomplish this task and calling the method twice (once for each matrix). Consider using this method header: 
-
-
-		public static int[][] matrixFromFile(int rows, int columns, Scanner file_reader)
-
-		NOTE: if you are using a static scanner or an object-oriented approach then you may not need to pass these arguments to the method.
-
-
-		*/
+		print2dArray(matrix1);
+		System.out.println();
+		print2dArray(matrix2);
 		
 		
 		
@@ -99,6 +83,18 @@ public class Main
 			}
 			System.out.println();
 		}
+	}
+	
+	public static int[][] matrixFromFile(int rows, int cols, Scanner fileReader) {
+		int[][] matrix = new int[rows][cols];
+		
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				matrix[r][c] = fileReader.nextInt();
+			}
+		}
+		
+		return matrix;
 	}
 
 }
