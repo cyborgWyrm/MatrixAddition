@@ -25,18 +25,56 @@ public class Main
 {
 	public static void main(String[] args) 
 	{
+		File inputFile = new File(args[0]);
+		Scanner fileReader = null;
+		
+		try {
+			fileReader = new Scanner(inputFile);
+		}
+		catch (IOException e) {
+			
+		}
+		
+		int rows = fileReader.nextInt();
+		int cols = fileReader.nextInt();
+		
+		
+	
+		int[][] matrix1 = new int[1][1];
+		int[][] matrix2 = new int[1][1];
+		
+		ThreadOperation thread0 = new ThreadOperation(matrix1, matrix2, Quadrant.AA);
+		ThreadOperation thread1 = new ThreadOperation(matrix1, matrix2, Quadrant.AB);
+		ThreadOperation thread2 = new ThreadOperation(matrix1, matrix2, Quadrant.BA);
+		ThreadOperation thread3 = new ThreadOperation(matrix1, matrix2, Quadrant.BB);
+		
+		thread0.start();
+		thread1.start();
+		thread2.start();
+		thread3.start();
+		
+		try {
+			thread0.join();
+			thread1.join();
+			thread2.join();
+			thread3.join();
+		}
+		catch (InterruptedException e) {
+			
+		}
+		
+		
+		int[][] test = {
+			{1, 2, 3},
+			{4, 5, 6},
+			{7, 8, 9}
+		};
+		
+		print2dArray(test);
+		
 		
 		/*
 		For part 1 you need to create both of the above classes.
-		1.	In the main method of Main, instantiate four ThreadOperation objects, start them, and join them. Each ThreadOperation will take as input (through the constructor) two matrices and a quadrant indicator. The indicator could be a String, an int, an enum or a set of indexes. It’s up to you.
-
-		2.	In Main.java, write a static method named print2dArray that takes a two-dimensional array as input and prints it out with the rows and columns lined up. You must use System.out.printf.
-
-		3.	Instantiate a test 2d array with any values you like in main and use it to verify that print2dArray works.
-
-		4.	The filename should be given through the command prompt and passed into main via String[] args
-
-		5.	Open and connect to the file using a Scanner.
 
 		6.	Read in the number of rows and columns and save these in local variables in main.
 
@@ -52,6 +90,15 @@ public class Main
 		
 		
 		
+	}
+	
+	public static void print2dArray(int[][] array) {
+		for (int row = 0; row < array.length; row++) {
+			for (int col = 0; col < array[row].length; col++) {
+				System.out.printf("%3d", array[row][col]);
+			}
+			System.out.println();
+		}
 	}
 
 }
