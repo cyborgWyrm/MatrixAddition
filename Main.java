@@ -16,6 +16,12 @@ threads compared to processes, etcetera,
 and connect these issues to 
 multi-threading.
 
+Multi threading saves time because other threads can be working while one is
+waiting for something. Examples include pulling data from storage, or waiting
+for input from a human or another machine. This saves time because work is still
+getting done instead of being stuck while waiting for something.
+
+
 */
 import java.io.IOException;
 import java.io.File;
@@ -25,32 +31,48 @@ public class Main
 {
 	public static void main(String[] args) 
 	{
+		// Get file from args
+		if (args.length < 1) {
+			// error if no file given
+			System.out.println("Please provide a file to read");
+			System.exit(0);
+		}
 		File inputFile = new File(args[0]);
-		Scanner fileReader = null;
 		
+		
+		// Set up file reader
+		Scanner fileReader = null;
 		try {
 			fileReader = new Scanner(inputFile);
 		}
 		catch (IOException e) {
-			
+			// error if file is not found
+			System.out.println("File not found.");
+			System.exit(0);
 		}
 		
+		
+		// find rows and columns of matrixes. Should be the first two numbers in file.
 		int rows = fileReader.nextInt();
 		int cols = fileReader.nextInt();
 
+		// create matrix variables
 		int[][] matrix1 = matrixFromFile(rows,cols,fileReader);
 		int[][] matrix2 = matrixFromFile(rows,cols,fileReader);
 		
+		// Create all four threads
 		ThreadOperation thread0 = new ThreadOperation(matrix1, matrix2, Quadrant.AA);
 		ThreadOperation thread1 = new ThreadOperation(matrix1, matrix2, Quadrant.AB);
 		ThreadOperation thread2 = new ThreadOperation(matrix1, matrix2, Quadrant.BA);
 		ThreadOperation thread3 = new ThreadOperation(matrix1, matrix2, Quadrant.BB);
 		
+		// Start all four threads running
 		thread0.start();
 		thread1.start();
 		thread2.start();
 		thread3.start();
 		
+		// wait for all four threads to complete
 		try {
 			thread0.join();
 			thread1.join();
@@ -62,12 +84,9 @@ public class Main
 		}
 		
 		
-		int[][] test = {
-			{1, 2, 3},
-			{4, 5, 6},
-			{7, 8, 9}
-		};
+		// test the print2dArray method
 		
+		System.out.println("Testing print method");
 		print2dArray(matrix1);
 		System.out.println();
 		print2dArray(matrix2);
@@ -76,20 +95,25 @@ public class Main
 		
 	}
 	
+	// print out a given matrix
 	public static void print2dArray(int[][] array) {
 		for (int row = 0; row < array.length; row++) {
 			for (int col = 0; col < array[row].length; col++) {
+				// print out each number
 				System.out.printf("%3d", array[row][col]);
 			}
+			// new line for every row
 			System.out.println();
 		}
 	}
 	
+	// read in a matrix from a given file
 	public static int[][] matrixFromFile(int rows, int cols, Scanner fileReader) {
 		int[][] matrix = new int[rows][cols];
 		
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols; c++) {
+				// read in the values and put in the proper places in the array
 				matrix[r][c] = fileReader.nextInt();
 			}
 		}

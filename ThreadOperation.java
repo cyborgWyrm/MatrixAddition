@@ -17,8 +17,12 @@ public class ThreadOperation extends Thread {
 	
 	// run
 	public void run() {
+		// I dont think I'm supposed to write this code until part two
+		// although I'm not entirely sure. For now I'll just print out which
+		// thread it is
 		
-		System.out.println(quadrant);
+		System.out.println("Quadrant " + quadrant + " running");
+		
 	}
 	
 	
