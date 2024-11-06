@@ -59,12 +59,13 @@ public class Main
 		// create matrix variables
 		int[][] matrix1 = matrixFromFile(rows,cols,fileReader);
 		int[][] matrix2 = matrixFromFile(rows,cols,fileReader);
+		int[][] resultMatrix = new int[rows][cols];
 		
 		// Create all four threads
-		ThreadOperation thread0 = new ThreadOperation(matrix1, matrix2, Quadrant.AA);
-		ThreadOperation thread1 = new ThreadOperation(matrix1, matrix2, Quadrant.AB);
-		ThreadOperation thread2 = new ThreadOperation(matrix1, matrix2, Quadrant.BA);
-		ThreadOperation thread3 = new ThreadOperation(matrix1, matrix2, Quadrant.BB);
+		ThreadOperation thread0 = new ThreadOperation(matrix1, matrix2, "AA", resultMatrix);
+		ThreadOperation thread1 = new ThreadOperation(matrix1, matrix2, "AB", resultMatrix);
+		ThreadOperation thread2 = new ThreadOperation(matrix1, matrix2, "BA", resultMatrix);
+		ThreadOperation thread3 = new ThreadOperation(matrix1, matrix2, "BB", resultMatrix);
 		
 		// Start all four threads running
 		thread0.start();
@@ -86,10 +87,11 @@ public class Main
 		
 		// test the print2dArray method
 		
-		System.out.println("Testing print method");
 		print2dArray(matrix1);
 		System.out.println();
 		print2dArray(matrix2);
+		System.out.println();
+		print2dArray(resultMatrix);
 		
 		
 		
@@ -100,7 +102,7 @@ public class Main
 		for (int row = 0; row < array.length; row++) {
 			for (int col = 0; col < array[row].length; col++) {
 				// print out each number
-				System.out.printf("%3d", array[row][col]);
+				System.out.printf("%-4d", array[row][col]);
 			}
 			// new line for every row
 			System.out.println();

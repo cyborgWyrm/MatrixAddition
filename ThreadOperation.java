@@ -3,25 +3,42 @@
 public class ThreadOperation extends Thread {
 	
 	// instance variables
-	private Quadrant quadrant;
+	private String quadrant;
 	private int[][] matrix1;
 	private int[][] matrix2;
-	// private int[][] resultMatrix?
+	private int[][] resultMatrix;
 	
 	// constructor
-	public ThreadOperation(int[][] matrix1, int[][] matrix2, Quadrant quadrant) {
+	public ThreadOperation(int[][] matrix1, int[][] matrix2, String quadrant, int[][] resultMatrix) {
 		this.matrix1 = matrix1;
 		this.matrix2 = matrix2;
 		this.quadrant = quadrant;
+		this.resultMatrix = resultMatrix;
 	}
 	
 	// run
 	public void run() {
-		// I dont think I'm supposed to write this code until part two
-		// although I'm not entirely sure. For now I'll just print out which
-		// thread it is
 		
-		System.out.println("Quadrant " + quadrant + " running");
+		int xstart = 0;
+		int ystart = 0;
+		int xend = matrix1[0].length/2;
+		int yend = matrix1.length/2;
+		
+		if (quadrant.charAt(0) == 'B') {
+			ystart = matrix1.length/2;
+			yend = matrix1.length;
+		}
+		if (quadrant.charAt(1) == 'B') {
+			xstart = matrix1[0].length/2;
+			xend = matrix1[0].length;
+		}
+		
+		
+		for (int row = ystart; row < yend; row++) {
+			for (int col = xstart; col < xend; col++) {
+				resultMatrix[row][col] = matrix1[row][col] + matrix2[row][col];
+			}
+		}
 		
 	}
 	
