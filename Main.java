@@ -85,12 +85,7 @@ public class Main
 		}
 		
 		
-		// test the print2dArray method
-		
-		print2dArray(matrix1);
-		System.out.println();
-		print2dArray(matrix2);
-		System.out.println();
+		// print out the resulting matrix
 		print2dArray(resultMatrix);
 		
 		
